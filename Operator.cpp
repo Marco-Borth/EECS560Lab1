@@ -170,7 +170,7 @@ void Operator::run() {
             cout << "\nERROR! List is Empty.\n\n";
           }
         }
-        // 7. Find Next - Work in Progress!
+        // 7. Find Next - Complete!
         else if (option == 7) {
           cout << "\nLets find the next Element!\n";
 
@@ -255,10 +255,47 @@ void Operator::run() {
             cout << "\nERROR! Invalid Position!\n\n";
           }
         }
-        // 10. Print At - Work in Progress!
+        // 10. Print At - Complete!
         else if (option == 10) {
           cout << "\nPrinting an Element at Postion:\n";
-          cout << "\nTBD\n";
+
+          int position;
+          cout << "\nChoose a position to print element:\n\n> ";
+          cin >> position;
+
+          while(1) {
+            if(cin.fail()) {
+              cin.clear();
+              cin.ignore(numeric_limits<streamsize>::max(),'\n');
+              cout << "\n\nERROR! Invalid entry!\n\n";
+              cout << "\nChoose a position to print element:\n\n> ";
+              cin >> position;
+            } else {
+              if (position > 0 && position <= myList.getLength()) {
+                if (position % 10 == 1)
+                  cout << "\nLooking for an element at the " << position << "st position...\n\n";
+                else if (position % 10 == 2)
+                  cout << "\nLooking for an element at the " << position << "nd position...\n\n";
+                else if (position % 10 == 3)
+                  cout << "\nLooking for an element at the " << position << "rd position...\n\n";
+                else
+                  cout << "\nLooking for an element at the " << position << "th position...\n\n";
+
+                if (position % 10 == 1)
+                  cout << "\nThe element at the " << position << "st position is: " << myList.getEntry(position) << "\n\n";
+                else if (position % 10 == 2)
+                  cout << "\nThe element at the " << position << "nd position is: " << myList.getEntry(position) << "\n\n";
+                else if (position % 10 == 3)
+                  cout << "\nThe element at the " << position << "rd position is: " << myList.getEntry(position) << "\n\n";
+                else
+                  cout << "\nThe element at the " << position << "th position is: " << myList.getEntry(position) << "\n\n";
+              } else {
+                cout << "\nERROR! Position Number Given is Outside the List Length!\n\n";
+              }
+
+              break;
+            }
+          }
         }
         // 11. Exit - Complete!
         else if (option == 11) {
