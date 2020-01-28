@@ -1,0 +1,18 @@
+NEW_TAB
+NAVIGATE http://google.com
+NAVIGATE http://reddit.com
+NAVIGATE http://facebook.com
+NAVIGATE http://myspace.com
+HISTORY
+NEW_TAB
+NAVIGATE http://ku.edu
+NAVIGATE http://youtube.com
+NAVIGATE http://bing.com
+BACK
+HISTORY
+MOVE_LEFT 1
+FOCUS 2
+BACK
+NAVIGATE http://amazon.com
+HISTORY
+EXIT
