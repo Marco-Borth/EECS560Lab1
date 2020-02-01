@@ -22,7 +22,7 @@ class WebBrowser
 private:
   string file;
   string command;
-  LinkedList<Tab> tabList;
+  LinkedList<Tab*> tabList;
   int total_num_tabs;
 
 public:

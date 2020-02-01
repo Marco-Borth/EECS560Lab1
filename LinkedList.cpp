@@ -8,6 +8,8 @@
  *
  ---------------------------------------------------------------------------- */
 
+//#include "LinkedList.h"
+
 template <typename T>
 LinkedList<T>::LinkedList()
 {
@@ -43,7 +45,7 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& original)
 template <typename T>
 bool LinkedList<T>::isEmpty() const
 {
-	if(m_length == 0 || m_front == nullptr)
+	if(m_length == 0)
 	{
 		return(true);
 	}

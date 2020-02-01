@@ -18,6 +18,13 @@ Tab::Tab()
   focusedURL = "";
 }
 
+Tab::~Tab()
+{
+  urlHistory.~LinkedList();
+  delete &tabFocus;
+  delete &focusedURL;
+}
+
 void Tab::navigateTo(string url)
 {
   bool urlIncluded = false;
@@ -36,39 +43,43 @@ void Tab::navigateTo(string url)
         urlIncluded = true;
       }
     }
-  }
 
-  if (urlIncluded)
-  {
-    for (int i = 1; i <= urlHistory.getLength(); i++)
+    if (urlIncluded)
     {
-      if (url == urlHistory.getEntry(i))
+      for (int i = 1; i <= urlHistory.getLength(); i++)
       {
-        tabFocus = i;
+        if (url == urlHistory.getEntry(i))
+        {
+          tabFocus = i;
+          focusedURL = url;
+        }
+      }
+    }
+    else
+    {
+      if (tabFocus == urlHistory.getLength())
+      {
+        urlHistory.insert(urlHistory.getLength() + 1, url);
+        tabFocus++;
+        focusedURL = url;
+      }
+      else if (tabFocus >= 1)
+      {
+        while (urlHistory.getEntry(urlHistory.getLength()) != focusedURL)
+        {
+          urlHistory.remove(urlHistory.getLength());
+        }
+
+        urlHistory.insert(urlHistory.getLength() + 1, url);
+        tabFocus++;
         focusedURL = url;
       }
     }
-  }
-  else
-  {
-    if (tabFocus == urlHistory.getLength())
-    {
-      urlHistory.insert(urlHistory.getLength() + 1, url);
-      tabFocus++;
-      focusedURL = url;
-    }
-    else if (tabFocus >= 1)
-    {
-      while (urlHistory.getEntry(urlHistory.getLength()) != focusedURL)
-      {
-        urlHistory.remove(urlHistory.getLength());
-      }
 
-      urlHistory.insert(urlHistory.getLength() + 1, url);
-      tabFocus++;
-      focusedURL = url;
-    }
+    delete &url;
   }
+
+  delete &url;
 }
 
 void Tab::forward()
@@ -96,9 +107,11 @@ string Tab::currentURL() const
 
 int Tab::copyCurrentHistory(LinkedList<string>& destination)
 {
-  //LinkedList<string>* tempList = nullptr;
-  //tempList = urlHistory;
-  //urlHistory = destination;
+  for (int i = 1; i <= urlHistory.getLength(); i++)
+  {
+    destination.insert(i, urlHistory.getEntry(i));
+  }
+  int currentURLPosition = 0;
 
   if (urlHistory.getLength() == 0)
   {
@@ -108,5 +121,5 @@ int Tab::copyCurrentHistory(LinkedList<string>& destination)
   {
     return (tabFocus);
   }
-  //tempList.~LinkedList();
+  destination.~LinkedList();
 }

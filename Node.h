@@ -62,6 +62,7 @@ public:
 */
   ~Node<T>();
 };
-#endif
 
 #include "Node.cpp"
+
+#endif

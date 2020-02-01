@@ -27,7 +27,6 @@ LinkedList::~LinkedList()
 {
 	clear();
 	m_front = nullptr;
-	delete &m_length;
 }
 
 LinkedList& LinkedList::operator=(const LinkedList& original)
@@ -119,62 +118,48 @@ void LinkedList::insert(int position, int entry)
 
 void LinkedList::remove(int position)
 {
-	if (!isEmpty())
+	if (position == 1)
 	{
-		if (position == 1)
+		Node* m_back = m_front;
+		Node* temp = m_front;
+		m_back = m_back->getNext();
+		temp->~Node();
+		m_front = m_back;
+		m_length--;
+	}
+	else if ((position > 0) && position == m_length)
+	{
+		int index = 1;
+		Node* m_back = m_front;
+
+		while (index < position)
 		{
-			Node* m_back = m_front;
-			Node* temp = m_front;
 			m_back = m_back->getNext();
-			temp->~Node();
-			m_front = m_back;
-			m_length--;
+			index++;
 		}
-		else if (position == m_length)
+
+		m_back->~Node();
+		m_length--;
+	}
+	else if ((position > 1) && (position < m_length + 1))
+	{
+		Node* m_order = m_front;
+		Node* temp = nullptr;
+
+		for (int i = 1; i < position - 1; i++)
 		{
-			int index = 1;
-			Node* m_back = m_front;
-
-			while (index < position)
-			{
-				m_back = m_back->getNext();
-				index++;
-			}
-
-			m_back->~Node();
-			m_length--;
+			m_order = m_order->getNext();
 		}
-		else if ((position > 1) && (position < m_length + 1)) // Problematic, need assistance.
-		{
-			int index = 1;
-			Node* m_back = m_front;
-			Node* m_order = m_front;
-			Node* m_previous = m_front;
-			Node* temp = nullptr;
 
-			while (index < position)
-			{
-				m_back = m_back->getNext();
-				if (index + 1 != position)
-				{
-					m_order = m_back;
-				}
-				if (index + 2 != position)
-				{
-					m_previous = m_back;
-				}
-				index++;
-			}
-
-			temp = m_order;
-			temp->~Node();
-			m_previous = m_back;
-			m_length--;
-		}
-		else
-		{
-			throw(runtime_error("ERROR! Invalid position.\n"));
-		}
+		temp = m_order->getNext();
+		m_order->setNext(temp->getNext());
+		temp->setNext(nullptr);
+		delete temp;
+		m_length--;
+	}
+	else
+	{
+		throw(runtime_error("ERROR! Invalid position.\n"));
 	}
 }
 
@@ -195,9 +180,9 @@ int LinkedList::getEntry(int position) const
 {
 	Node* temp = m_front;
 
-	if ((position >= 0) && (position < m_length))
+	if ((position >= 1) && (position <= m_length))
 	{
-		for (int i = 0; i < position; i++)
+		for (int i = 1; i < position; i++)
 		{
 			temp = temp->getNext();
 		}

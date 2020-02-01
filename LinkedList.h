@@ -102,6 +102,7 @@ public:
 **/
   void replace(int position, T newEntry);
 };
-#endif
 
 #include "LinkedList.cpp"
+
+#endif

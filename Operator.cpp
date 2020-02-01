@@ -11,9 +11,12 @@
 #include "Operator.h"
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
-Operator::Operator(){}
+Operator::Operator(string filename){
+  file = filename;
+}
 
 void Operator::printCommands() {
   cout << "Please choose one of the following commands:\n\n";
@@ -32,6 +35,30 @@ void Operator::printCommands() {
 
 void Operator::run() {
   cout << "\nWelcome to the Interactive Singly Linked List Program!\n\n";
+
+  int value = 0;
+  ifstream inFile;
+
+  //Open File.
+  inFile.open(file);
+
+  if (!inFile.is_open()) {
+    cout << "File name not valid!\n";
+  } else {
+    while (!inFile.eof( )) {
+      inFile >> value;
+      
+      if(inFile.fail()) {
+        inFile.clear();
+        inFile.ignore(numeric_limits<streamsize>::max(),'\n');
+      } else {
+        myList.insert(1, value);
+      }
+    }
+  }
+
+  // Close File.
+  inFile.close();
 
   do {
     printCommands();
@@ -91,46 +118,91 @@ void Operator::run() {
             }
           }
         }
-        // 4. Delete - Work in Progress, develop a Find number algorithm!
+        // 4. Delete - Work in Progress, Testing to be done to delete middle Elements!
         else if (option == 4) {
-          cout << "\nPreparing to Delete a Listed Element...\n";
+          if (myList.getLength() > 0) {
+            cout << "\nPreparing to Delete a Listed Element...\n";
 
-          int value;
-          cout << "\nChoose a number to be deleted from the list:\n\n> ";
-          cin >> value;
+            int value;
+            cout << "\nChoose a number to be deleted from the list:\n\n> ";
+            cin >> value;
 
-          while(1) {
-            if(cin.fail()) {
-              cin.clear();
-              cin.ignore(numeric_limits<streamsize>::max(),'\n');
-              cout << "\n\nERROR! Invalid entry!\n\n";
-              cout << "\nChoose a number to be deleted from the list:\n\n> ";
-              cin >> value;
-            } else {
-              try {
-                cout << "\nDeleting " << value << " from this list...\n";
-                //myList.remove(1, value);
-                cout << value << " is deleted.\n\n";
-              } catch (runtime_error) {
-                cout << "\nERROR! Invalid Position!\n\n";
+            while(1) {
+              if(cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                cout << "\n\nERROR! Invalid entry!\n\n";
+                cout << "\nChoose a number to be deleted from the list:\n\n> ";
+                cin >> value;
+              } else {
+                try {
+                  cout << "\nDeleting " << value << " from this list...\n\n";
+                  int position = 1;
+
+                  bool isFound = false;
+                  while (position <= myList.getLength()) {
+                    if (myList.getEntry(position) == value) {
+                      myList.remove(position);
+                      isFound = true;
+                      break;
+                    }
+                    position++;
+                  }
+
+                  if(!isFound)
+                    cout << value << " is NOT found in the list.\n\n";
+                  else
+                    cout << "The last occurrence of " << value << " has been deleted from the list.\n\n";
+                } catch (runtime_error) {
+                  cout << "\nERROR! Invalid Position!\n\n";
+                }
+
+                break;
+              }
+            }
+          } else {
+            cout << "\nERROR! List is Empty.\n\n";
+          }
+        }
+        // 5. Delete Duplicates - Work in Progress, Testing to be done to delete middle Elements!
+        else if (option == 5) {
+          if (myList.getLength() > 0) {
+            cout << "\nPreparing to Delete All Duplicate Elements...\n";
+
+            try {
+              int position = 1;
+              int value = 0;
+
+              while (position <= myList.getLength()) {
+                value = myList.getEntry(position);
+                int i = position + 1;
+
+                while (i <= myList.getLength()) {
+                  if (myList.getEntry(i) == value) {
+                    myList.remove(position);
+                    position--;
+                    break;
+                  }
+
+                  i++;
+                }
+
+                position++;
               }
 
-              break;
+              cout << "All Duplicate Elements have been deleted. Only Unique Elements remain.\n\n";
+            } catch (runtime_error) {
+              cout << "\nERROR! Invalid Position!\n\n";
             }
+          } else {
+            cout << "\nERROR! List is Empty.\n\n";
           }
-
-          cout << "\nTBD\n";
-        }
-        // 5. Delete Duplicates - Work in Progress, Delete Operation still needs to be developed!
-        else if (option == 5) {
-          cout << "\nPreparing to Delete All Given Duplicate Elements...\n";
-          cout << "\nTBD\n";
         }
         // 6. Find - Complete!
         else if (option == 6) {
-          cout << "\nLets find an Element!\n";
-
           if (myList.getLength() > 0) {
+            cout << "\nLets find an Element!\n";
+
             int value;
             cout << "\nEnter the number to find:\n\n> ";
             cin >> value;
@@ -192,7 +264,7 @@ void Operator::run() {
                   int position = 1;
 
                   bool isFound = false;
-                   while (position <= myList.getLength()) {
+                  while (position <= myList.getLength()) {
                     if (myList.getEntry(position) == value) {
                       isFound = true;
                       if (position == myList.getLength())
@@ -216,12 +288,10 @@ void Operator::run() {
           } else {
             cout << "\nERROR! List is Empty.\n\n";
           }
-
-          cout << "\nTBD\n";
         }
         // 8. Print - Complete!
         else if (option == 8) {
-          cout << "\nPrinting List of Elements...\n\n";
+          cout << "\nPrinting List of Elements...\n";
 
           try {
             if (myList.getLength() > 0) {
@@ -257,44 +327,48 @@ void Operator::run() {
         }
         // 10. Print At - Complete!
         else if (option == 10) {
-          cout << "\nPrinting an Element at Postion:\n";
+          if (myList.getLength() > 0) {
+            cout << "\nPrinting an Element at Postion:\n";
 
-          int position;
-          cout << "\nChoose a position to print element:\n\n> ";
-          cin >> position;
+            int position;
+            cout << "\nChoose a position to print element:\n\n> ";
+            cin >> position;
 
-          while(1) {
-            if(cin.fail()) {
-              cin.clear();
-              cin.ignore(numeric_limits<streamsize>::max(),'\n');
-              cout << "\n\nERROR! Invalid entry!\n\n";
-              cout << "\nChoose a position to print element:\n\n> ";
-              cin >> position;
-            } else {
-              if (position > 0 && position <= myList.getLength()) {
-                if (position % 10 == 1)
-                  cout << "\nLooking for an element at the " << position << "st position...\n\n";
-                else if (position % 10 == 2)
-                  cout << "\nLooking for an element at the " << position << "nd position...\n\n";
-                else if (position % 10 == 3)
-                  cout << "\nLooking for an element at the " << position << "rd position...\n\n";
-                else
-                  cout << "\nLooking for an element at the " << position << "th position...\n\n";
-
-                if (position % 10 == 1)
-                  cout << "\nThe element at the " << position << "st position is: " << myList.getEntry(position) << "\n\n";
-                else if (position % 10 == 2)
-                  cout << "\nThe element at the " << position << "nd position is: " << myList.getEntry(position) << "\n\n";
-                else if (position % 10 == 3)
-                  cout << "\nThe element at the " << position << "rd position is: " << myList.getEntry(position) << "\n\n";
-                else
-                  cout << "\nThe element at the " << position << "th position is: " << myList.getEntry(position) << "\n\n";
+            while(1) {
+              if(cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                cout << "\n\nERROR! Invalid entry!\n\n";
+                cout << "\nChoose a position to print element:\n\n> ";
+                cin >> position;
               } else {
-                cout << "\nERROR! Position Number Given is Outside the List Length!\n\n";
-              }
+                if (position > 0 && position <= myList.getLength()) {
+                  if (position % 10 == 1 && position % 100 != 11)
+                    cout << "\nLooking for an element at the " << position << "st position...\n\n";
+                  else if (position % 10 == 2 && position % 100 != 12)
+                    cout << "\nLooking for an element at the " << position << "nd position...\n\n";
+                  else if (position % 10 == 3 && position % 100 != 13)
+                    cout << "\nLooking for an element at the " << position << "rd position...\n\n";
+                  else
+                    cout << "\nLooking for an element at the " << position << "th position...\n\n";
 
-              break;
+                  if (position % 10 == 1 && position % 100 != 11)
+                    cout << "\nThe element at the " << position << "st position is: " << myList.getEntry(position) << "\n\n";
+                  else if (position % 10 == 2 && position % 100 != 12)
+                    cout << "\nThe element at the " << position << "nd position is: " << myList.getEntry(position) << "\n\n";
+                  else if (position % 10 == 3 && position % 100 != 13)
+                    cout << "\nThe element at the " << position << "rd position is: " << myList.getEntry(position) << "\n\n";
+                  else
+                    cout << "\nThe element at the " << position << "th position is: " << myList.getEntry(position) << "\n\n";
+                } else {
+                  cout << "\nERROR! Position Number Given is Outside the List Length!\n\n";
+                }
+
+                break;
+              }
             }
+          } else {
+            cout << "\nERROR! List is Empty.\n\n";
           }
         }
         // 11. Exit - Complete!

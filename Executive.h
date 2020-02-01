@@ -16,6 +16,9 @@ using namespace std;
 
 class Executive
 {
+private:
+	string file;
+
 public:
 /**
 * @pre none.
@@ -24,10 +27,10 @@ public:
 	void run();
 
 /*
-* @pre none.
+* @pre filename is a string.
 * @post Executive object is constructed.
 */
-	Executive();
+	Executive(string filename);
 };
 
 #endif

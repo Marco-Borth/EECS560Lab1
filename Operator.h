@@ -21,6 +21,7 @@ class Operator
 private:
   int option;
   LinkedList<int> myList;
+  string file;
 
 public:
 /**
@@ -32,9 +33,9 @@ public:
   void printCommands();
 
 /*
-* @pre none.
-* @post Operator object is constructed.
+* @pre filename is a string.
+* @post Operator object is constructed, file == filename.
 */
-  Operator();
+  Operator(string filename);
 };
 #endif

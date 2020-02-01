@@ -13,7 +13,6 @@
 
 #include "LinkedList.h"
 #include <string>
-#include <iostream>
 using namespace std;
 
 class Tab
@@ -59,6 +58,8 @@ public:
   int copyCurrentHistory(LinkedList<string>& destination);
 
   Tab();
+
+  ~Tab();
 };
 
 #endif

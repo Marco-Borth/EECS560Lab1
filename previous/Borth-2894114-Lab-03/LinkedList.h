@@ -2,9 +2,9 @@
  *
  * File Name:  LinkedList.h
  * Author: Marco Borth
- * Assignment:   EECS-268 Lab 2 Program
- * Description:  LinkedList Class is defined.
- * Date: 2/22/19
+ * Assignment:   EECS-268 Lab 3 Program
+ * Description:  LinkedList Template Class is defined.
+ * Date: 3/1/19
  *
  ---------------------------------------------------------------------------- */
 
@@ -16,10 +16,11 @@
 #include <stdexcept> //For runtime_error
 using namespace std;
 
+template <typename T>
 class LinkedList
 {
 private:
-  Node* m_front;
+  Node<T>* m_front;
   int m_length;
 
 public:
@@ -30,11 +31,23 @@ public:
 */
   LinkedList();
 
-  LinkedList(const LinkedList& original);
+/*
+* @pre none.
+* @post LinkedList copy constructor runs operator= function.
+*/
+  LinkedList(const LinkedList<T>& original);
 
+/*
+* @pre none.
+* @post ~LinkedList clears m_front and deletes LinkedList object.
+*/
   ~LinkedList();
 
-  LinkedList& operator=(const LinkedList& original);
+/*
+* @pre none.
+* @post operator= inserts original nodes onto the LinkedList.
+*/
+  LinkedList<T>& operator=(const LinkedList<T>& original);
 
 /*
 * @pre none.
@@ -55,7 +68,7 @@ public:
 * @post insert creates a new node within the LinkedList.
 * @throw runtime_error if the postion is invalid.
 */
-   void insert(int position, int entry);
+   void insert(int position, T entry);
 
 /*
 * @pre none.
@@ -78,7 +91,7 @@ public:
 * @throw runtime_error if the postion is invalid.
 * @throw runtime_error if LinkedList isEmpty.
 */
-   int getEntry(int position) const;
+   T getEntry(int position) const;
 
 /** Here's an example of a doxygen comment block. Do this for all methods
 * @pre The position is between 1 and the list's length
@@ -87,6 +100,9 @@ public:
 * @param newEntry: A new entry to put in the list
 * @throw std::runtime_error if the position is invalid.
 **/
-  void replace(int position, int newEntry);
+  void replace(int position, T newEntry);
 };
+
+#include "LinkedList.cpp"
+
 #endif
