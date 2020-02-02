@@ -386,6 +386,8 @@ void Operator::run() {
   } while(option != 11);
   myList.clear();
 
+  value = 0;
+
   cout << "\nProgram execution completed!\n";
   cout << "\nHave a nice day!...\n\n";
 }

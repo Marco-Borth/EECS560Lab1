@@ -28,7 +28,6 @@ LinkedList<T>::~LinkedList()
 {
 	clear();
 	m_front = nullptr;
-	delete &m_length;
 }
 
 template <typename T>
