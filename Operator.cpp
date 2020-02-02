@@ -4,7 +4,7 @@
  * Author: Marco Borth
  * Assignment:   EECS-560 Lab 1 - Implementation of Singly Linked List
  * Description:  Operator Class will either run the Interactive program for a Singly Linked List
- * Date: 1/28/20
+ * Date: 2/2/20
  *
  ---------------------------------------------------------------------------- */
 
@@ -47,7 +47,7 @@ void Operator::run() {
   } else {
     while (!inFile.eof( )) {
       inFile >> value;
-      
+
       if(inFile.fail()) {
         inFile.clear();
         inFile.ignore(numeric_limits<streamsize>::max(),'\n');
@@ -118,7 +118,7 @@ void Operator::run() {
             }
           }
         }
-        // 4. Delete - Work in Progress, Testing to be done to delete middle Elements!
+        // 4. Delete - Complete!
         else if (option == 4) {
           if (myList.getLength() > 0) {
             cout << "\nPreparing to Delete a Listed Element...\n";
@@ -164,7 +164,7 @@ void Operator::run() {
             cout << "\nERROR! List is Empty.\n\n";
           }
         }
-        // 5. Delete Duplicates - Work in Progress, Testing to be done to delete middle Elements!
+        // 5. Delete Duplicates - Complete!
         else if (option == 5) {
           if (myList.getLength() > 0) {
             cout << "\nPreparing to Delete All Duplicate Elements...\n";

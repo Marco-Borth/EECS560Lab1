@@ -2,9 +2,9 @@
 *
 * File Name:  Node.h
 * Author: Marco Borth
-* Assignment:   EECS-268 Lab 3 Program
-* Description:  Node Template Class is defined here;
-* Date: 3/1/19
+* Assignment:   EECS-560 Lab 1 - Implementation of Singly Linked List
+* Description:  Node Template Class is constructed;
+* Date: 2/2/20
 *
 ---------------------------------------------------------------------------- */
 

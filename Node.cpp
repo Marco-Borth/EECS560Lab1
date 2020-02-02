@@ -2,9 +2,9 @@
 *
 * File Name:  Node.cpp
 * Author: Marco Borth
-* Assignment:   EECS-268 Lab 3 Program
+* Assignment:   EECS-560 Lab 1 - Implementation of Singly Linked List
 * Description:  Node set and get methods defined here.
-* Date: 3/1/19
+* Date: 2/2/20
 *
 ---------------------------------------------------------------------------- */
 

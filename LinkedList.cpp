@@ -2,9 +2,9 @@
  *
  * File Name:  LinkedList.cpp
  * Author: Marco Borth
- * Assignment:   EECS-268 Lab 3 Program
+ * Assignment:   EECS-560 Lab 1 - Implementation of Singly Linked List
  * Description:  LinkedList methods are defined.
- * Date: 3/1/19
+ * Date: 2/2/20
  *
  ---------------------------------------------------------------------------- */
 
@@ -152,20 +152,30 @@ void LinkedList<T>::remove(int position)
 			m_back->~Node<T>();
 			m_length--;
 		}
-		else if ((position > 1) && (position < m_length + 1))
+		else if ((position > 1) && (position < m_length))
 		{
-			Node<T>* m_order = m_front;
-			Node<T>* temp = nullptr;
+			Node<T>* temp = m_front;
+			Node<T>* m_previous = m_front;
+			Node<T>* m_next = m_front;
 
-			for (int i = 1; i < position - 1; i++)
+			for (int i = 1; i <= position; i++)
 			{
-				m_order = m_order->getNext();
+				m_next = m_next->getNext();
+
+				if(i < position)
+				{
+					temp = temp->getNext();
+				}
+
+				if(i < position - 1)
+				{
+					m_previous = m_previous->getNext();
+				}
 			}
 
-			temp = m_order->getNext();
-			m_order->setNext(temp->getNext());
+			m_previous->setNext(m_next);
 			temp->setNext(nullptr);
-			delete temp;
+			temp->~Node<T>();
 			m_length--;
 		}
 		else

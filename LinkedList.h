@@ -2,9 +2,9 @@
  *
  * File Name:  LinkedList.h
  * Author: Marco Borth
- * Assignment:   EECS-268 Lab 3 Program
- * Description:  LinkedList Template Class is defined.
- * Date: 3/1/19
+ * Assignment:   EECS-560 Lab 1 - Implementation of Singly Linked List
+ * Description:  LinkedList Template Class are constructed.
+ * Date: 2/2/20
  *
  ---------------------------------------------------------------------------- */
 
