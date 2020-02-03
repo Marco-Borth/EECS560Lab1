@@ -4,7 +4,7 @@
  * Author: Marco Borth
  * Assignment:   EECS-560 Lab 1 - Implementation of Singly Linked List
  * Description:  Operator Class will either run the Interactive program for a Singly Linked List
- * Date: 2/2/20
+ * Date: 2/3/20
  *
  ---------------------------------------------------------------------------- */
 
@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <limits>
 using namespace std;
 
 Operator::Operator(string filename){
@@ -244,9 +245,10 @@ void Operator::run() {
         }
         // 7. Find Next - Complete!
         else if (option == 7) {
-          cout << "\nLets find the next Element!\n";
 
           if (myList.getLength() > 0) {
+            cout << "\nLets find the next Element!\n";
+
             int value;
             cout << "\nEnter the number to find its next element:\n\n> ";
             cin >> value;
